@@ -1,63 +1,35 @@
 // Importa bibliotecas
 const express = require('express');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const mysql = require('mysql');
 
+// Define porta utilizada
 const port = 5000;
+
+// Ajuda na manipulação de diretórios (caminhos de arquivos)
 const path = require('path');
+
+// Referencia o express que gerencia rotas na variável app
 const app = express();
 
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
-
+// Permite ler json
 app.use(express.json());
+
+// Permite ler o body
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Exibe página de login
 app.use(express.static(path.join(__dirname, 'login')));
 
-app.set('views', path.join(__dirname, 'views'));
-app.engine('html', require('ejs').renderFile); //instalar biblioteca ejs
-app.set('view engine', 'html');
-
-// const connection = mysql.createConnection({
-//     host: '127.0.0.1',
-//     user: 'root',
-//     database: 'users',
-//     port: 3306
-// });
-
+// Define como reagir à uma request de POST
 app.post('/', (request, response) => {
 
-    // console.log(request.body.username)
-    // console.log(request.body.password)
+    // Responde à request com um "ok"
+    response.send("ok");
 
-    // let query = "SELECT * FROM users WHERE user='"
-    // query += request.body.username
-    // query += "'"
-    // query += " AND pass='"
-    // query += request.body.password
-    // query += "'"
-
-    // connection.query(query, function (err, result, fields) {
-
-    //     if (request.body.username == result[0].user && request.body.password == result[0].pass ) {
-    //         response.send("Deu bom roscão")
-    //     } else {
-    //         response.send("Erro no login")
-    //     }
-
-    // });
 });
 
-app.get('/post', (request, response) => {
-    response.render("index");
-    console.log("teste")
-})
-
-
+// Fica sempre atento à requests na porta 5000
 app.listen(port, () => {
     console.log('servidor rodando');
 })
