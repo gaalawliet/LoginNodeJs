@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login</title>
+</head>
+<style>
+    #area {
+        position: relative;
+        left: 37%;
+        top: 29%;
+        width: 320px;
+        height: 270px;
+    }
+    
+    #area #formulario {
+        position: absolute;
+        display: block;
+    }
+    
+    fieldset {
+        width: 300px;
+        height: : 250px;
+    }
+    
+    legend {
+        font-style: bold;
+        font-family: "segoe UI";
+    }
+    
+    #formulario label {
+        position: absolute;
+        left: 19px;
+        margin-right: 5px;
+    }
+    
+    #formulario input.campo_nome {
+        background-color: blue;
+        position: absolute;
+        left: 95px;
+        top: 23px;
+        width: 225px;
+    }
+</style>
+
+<body>
+
+
+    <div id="area">
+        <form id="formulario" autocomplete="off">
+            <fieldset>
+                <legend>Faça o login</legend>
+                <label>Nome:</label><input class="campo_nome" type="text" /><br>
+                <label>Senha:</label><input class="password" name="password" /><br>
+                <input class="button_submit" type="submit" value="logar" />
+            </fieldset>
+        </form>
+    </div>
+</body>
+
+</html>
