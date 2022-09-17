@@ -1,7 +1,8 @@
 // Importa bibliotecas
-const express = require('express')
-const bodyParser = require('body-parser')
+const express = require('express');
+const bodyParser = require('body-parser');
 const session = require('express-session');
+const mysql = require('mysql');
 
 const port = 5000;
 const path = require('path');
@@ -14,58 +15,49 @@ app.use(session({
 }));
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'login')));
 
-// app.set('views', path.join(__dirname, 'views'));
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile); //instalar biblioteca ejs
 app.set('view engine', 'html');
 
+// const connection = mysql.createConnection({
+//     host: '127.0.0.1',
+//     user: 'root',
+//     database: 'users',
+//     port: 3306
+// });
 
 app.post('/', (request, response) => {
 
-    console.log("post")
-    if (request.body.login == 'gaa' && request.body.password == 'lawliet') {
-        response.sendFile('C:/Users/mateu/Documents/PRP/Code/LoginNodeJs/login/index.html')
-    } else {
-        response.send("Erro no login")
-    }
-})
+    // console.log(request.body.username)
+    // console.log(request.body.password)
 
-app.post('/login', (request, response) => {
+    // let query = "SELECT * FROM users WHERE user='"
+    // query += request.body.username
+    // query += "'"
+    // query += " AND pass='"
+    // query += request.body.password
+    // query += "'"
 
-    console.log(request.body.username)
-    console.log(request.body.password)
+    // connection.query(query, function (err, result, fields) {
 
-    // console.log("postando")
-    // console.log("login:", request.body)
-    // console.log("senha:", response.body)
+    //     if (request.body.username == result[0].user && request.body.password == result[0].pass ) {
+    //         response.send("Deu bom roscão")
+    //     } else {
+    //         response.send("Erro no login")
+    //     }
 
-    // if (request.body.login == 'gaa' && request.body.password == 'lawliet') {
-    //     response.sendFile('C:/Users/mateu/Documents/PRP/Code/LoginNodeJs/login/index.html')
-    // } else {
-    //     response.send("Erro no login")
-    // }
-})
-
-app.get('/login', (request, response) => {
-    response.render("index");
-    console.log(request.body.username);
-    console.log(request.body.password)
-    console.log("teste")
-})
+    // });
+});
 
 app.get('/post', (request, response) => {
     response.render("index");
     console.log("teste")
 })
 
+
 app.listen(port, () => {
     console.log('servidor rodando');
 })
-
-function login() {
-    alert("voce fez login");
-}
