@@ -1,10 +1,7 @@
 // Importa bibliotecas
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
 const session = require('express-session');
-
-
 
 // Define porta utilizada
 const port = 5000;
@@ -17,7 +14,7 @@ const app = express();
 
 // Inicia sessão
 app.use(session({
-    secret: 'secret',
+    secret: 'awfkoiafwkoafw1',
     resave: true,
     saveUninitialized: true
 }));
@@ -25,61 +22,57 @@ app.use(session({
 // Permite ler json
 app.use(express.json());
 
-//
-app.engine('html', require('ejs').renderFile); //instalar biblioteca ejs
-
-// Permite ler o body
+// 
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Exibe página (principal)
 app.use(express.static(path.join(__dirname, 'main')));
 
-// Disponibiliza arquivos do utilizados no index.html da tela de login
+// Disponibiliza arquivos  utilizados no index.html da tela de login
 app.use(express.static(path.join(__dirname, 'login')));
 
 // Define como reagir à uma request de POST
 app.post('/login', (request, response) => {
 
     // Verfiica se o usuário e a senha constam no "banco"
-    if (request.body.username == 'mat' && request.body.password == '1234' ) {
+    if (request.body.username == 'mat' && request.body.password == '1234') {
         request.session.loggedin = true;
         request.session.username = request.body.username;
-        response.redirect('/main');     
-    } 
-    
+        response.redirect('/main');
+    }
+
     // Se não estiver cadastrado apresenta mensagem de erro
     else {
-            response.send("Erro no login")
-    }   
-    
+        response.send("Erro no login")
+    }
+
 });
 
 
 // Exibe página de bem-vindo
 app.get('/welcome', (request, response) => {
-  
-    if (request.session.loggedin) { 
 
-		response.sendFile(__dirname + '/main/indexLogged.html'); 
-	} else {
+    if (request.session.loggedin) {
+
+        response.sendFile(__dirname + '/main/indexLogged.html');
         
-		response.sendFile(__dirname + '/main/index.html'); 
-	}
+    } else {
+
+        response.sendFile(__dirname + '/main/index.html');
+    }
 
 });
 
 // Desloga
 app.get('/sair', (request, response) => {
-  
-    if (request.session.loggedin) {
-		request.session.loggedin = false;
-        response.redirect('/welcome')
-	} 
 
-    else {
-        
-		response.sendFile(__dirname + '/main/index.html'); 
-	}
+    if (request.session.loggedin) {
+        request.session.loggedin = false;
+        response.redirect('/welcome')
+    } else {
+
+        response.sendFile(__dirname + '/main/index.html');
+    }
 
 });
 
@@ -87,16 +80,14 @@ app.get('/sair', (request, response) => {
 app.get('/main', (request, response) => {
 
     if (request.session.loggedin) {
-        
-		response.sendFile(__dirname + '/main/indexLogged.html');
 
-	} 
+        response.sendFile(__dirname + '/main/indexLogged.html');
 
-    else {
-        
-		response.send('Please login to view this page!');
-	}
-    
+    } else {
+
+        response.send('Please login to view this page!');
+    }
+
 })
 
 // Mostra tela de login
