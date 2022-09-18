@@ -8,6 +8,8 @@ const port = 5000;
 
 // Ajuda na manipulação de diretórios (caminhos de arquivos)
 const path = require('path');
+const { response } = require('express');
+const { serialize } = require('v8');
 
 // Referencia o express que gerencia rotas na variável app
 const app = express();
@@ -31,11 +33,19 @@ app.use(express.static(path.join(__dirname, 'main')));
 // Disponibiliza arquivos  utilizados no index.html da tela de login
 app.use(express.static(path.join(__dirname, 'login')));
 
+app.get('/cadastro', (request, response) => {
+    response.sendFile(__dirname + '/login/cadastro.html')
+});
+app.post('/cadastro', (request, response) => {
+
+});
+
 // Define como reagir à uma request de POST
 app.post('/login', (request, response) => {
 
     // Verfiica se o usuário e a senha constam no "banco"
-    if (request.body.username == 'mat' && request.body.password == '1234') {
+    if (request.body.username == 'mat',
+        'gaalawliet' && request.body.password == '1234') {
         request.session.loggedin = true;
         request.session.username = request.body.username;
         response.redirect('/main');
@@ -44,6 +54,7 @@ app.post('/login', (request, response) => {
     // Se não estiver cadastrado apresenta mensagem de erro
     else {
         response.send("Erro no login")
+
     }
 
 });
@@ -55,7 +66,7 @@ app.get('/welcome', (request, response) => {
     if (request.session.loggedin) {
 
         response.sendFile(__dirname + '/main/indexLogged.html');
-        
+
     } else {
 
         response.sendFile(__dirname + '/main/index.html');
